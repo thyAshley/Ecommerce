@@ -13,9 +13,11 @@ const Header: React.FC = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <Nav.Link data-testid="navlink-cart" href="/cart">
+                <i className="fas fa-shopping-cart px-1" />
                 Cart
               </Nav.Link>
               <Nav.Link data-testid="navlink-login" href="/login">
+                <i className="fas fa-user px-1" />
                 Sign In
               </Nav.Link>
             </Nav>
