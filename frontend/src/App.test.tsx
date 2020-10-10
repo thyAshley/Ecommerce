@@ -1,6 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import UserEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
+
 import App from "./App";
 
 describe("Testing <App />", () => {
@@ -16,10 +18,22 @@ describe("Testing <App />", () => {
 });
 
 describe("Testing Route", () => {
-  test("route to homepage", async () => {
-    render(<App />);
-    UserEvent.click(await screen.findByTestId(/navlink-home/i));
-    const title = await screen.findByTestId(/title/i);
-    expect(title).toHaveTextContent(/latest products/i);
+  beforeEach(() => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+  });
+  test("Route to Product Page", () => {
+    expect(screen.getByText(/Airpods/i));
+    UserEvent.click(screen.getByText(/Airpods/i));
+    expect(screen.getByText(/products/i));
+  });
+
+  test("Route to Cart Page", () => {
+    expect(screen.getByText(/cart/i));
+    UserEvent.click(screen.getByText(/cart/i));
+    expect(screen.getByText(/cart page/i));
   });
 });

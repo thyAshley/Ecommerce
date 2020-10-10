@@ -8,9 +8,9 @@ const HomeScreen: React.FC<{ products: ProductProps[] }> = ({ products }) => {
     <Fragment>
       <h1 data-testid="title">Latest Products</h1>
       <Row>
-        {products.map((product) => (
+        {products.map((product, idx) => (
           <Col
-            data-testid="product-info"
+            data-testid={`product-info-${idx}`}
             key={product._id}
             sm={12}
             md={6}

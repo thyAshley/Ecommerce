@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-
+import { MemoryRouter, Router } from "react-router-dom";
 import HomeScreen from "./HomeScreen";
+
 const dummyProduct = [
   {
     _id: "1",
@@ -45,6 +45,6 @@ describe("Render <HomeScreen />", () => {
   });
 
   test("Render Correct number of Product on HomeScreen", async () => {
-    expect(await screen.findAllByTestId("product-info")).toHaveLength(2);
+    expect(await screen.findAllByTestId(/product-info/)).toHaveLength(2);
   });
 });

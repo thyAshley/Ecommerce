@@ -1,10 +1,16 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+
 import Header from "./Header";
 
 describe("Test <Header /> Without Error", () => {
   beforeEach(() => {
-    render(<Header />);
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>
+    );
   });
   test("Render Navlinks without error", async () => {
     const home = await screen.findByTestId(/navlink-home/i);

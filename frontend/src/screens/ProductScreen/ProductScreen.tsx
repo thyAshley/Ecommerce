@@ -1,7 +1,7 @@
 import React from "react";
 
 const ProductScreen = () => {
-  return <div>Product</div>;
+  return <div data-testid="title">Products</div>;
 };
 
 export default ProductScreen;
