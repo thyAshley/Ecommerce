@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, within } from "@testing-library/react";
 import Product from "./Product";
+import { MemoryRouter } from "react-router-dom";
 
 const dummyProduct = {
   _id: "1",
@@ -17,9 +18,12 @@ const dummyProduct = {
 };
 
 describe("Render <Product />", () => {
-  render(<Product product={dummyProduct} />);
-
   test("Render product with correct href and image", async () => {
+    render(
+      <MemoryRouter>
+        <Product product={dummyProduct} />
+      </MemoryRouter>
+    );
     const item = await screen.findByTestId(`product ${dummyProduct._id}`);
     expect(item).toHaveAttribute("href", `/product/${dummyProduct._id}`);
     const productImage = within(item).getByTestId("product image");

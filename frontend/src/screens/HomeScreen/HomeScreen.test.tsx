@@ -1,7 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import HomeScreen from "./HomeScreen";
+import { MemoryRouter } from "react-router-dom";
 
+import HomeScreen from "./HomeScreen";
 const dummyProduct = [
   {
     _id: "1",
@@ -32,7 +33,11 @@ const dummyProduct = [
 ];
 describe("Render <HomeScreen />", () => {
   beforeEach(() => {
-    render(<HomeScreen products={dummyProduct} />);
+    render(
+      <MemoryRouter>
+        <HomeScreen products={dummyProduct} />
+      </MemoryRouter>
+    );
   });
 
   test("Render title without error", async () => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { ProductProps } from "../../types/app_types";
 import Rating from "./Rating/Rating";
@@ -7,22 +8,22 @@ import Rating from "./Rating/Rating";
 const Product: React.FC<{ product: ProductProps }> = ({ product }) => {
   return (
     <Card className="my-3 p-3 rounded">
-      <a
+      <Link
         data-testid={`product ${product._id}`}
-        href={`/product/${product._id}`}
+        to={`/product/${product._id}`}
       >
         <Card.Img
           data-testid="product image"
           src={product.image}
           variant="top"
         />
-      </a>
+      </Link>
       <Card.Body>
-        <a href={`/product/${product._id}`}>
+        <Link to={`/product/${product._id}`}>
           <Card.Title as="div">
             <strong>{product.name}</strong>
           </Card.Title>
-        </a>
+        </Link>
         <Card.Text as="div">
           <Rating
             value={product.rating}

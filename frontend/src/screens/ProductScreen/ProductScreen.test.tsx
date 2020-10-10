@@ -1,0 +1,3 @@
+describe("<ProductScreen />", () => {
+  test("", () => {});
+});

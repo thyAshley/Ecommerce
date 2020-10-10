@@ -6,7 +6,7 @@ const Header: React.FC = () => {
     <header data-testid="header-component">
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-          <Navbar.Brand data-testid="navlink-home" href="/home">
+          <Navbar.Brand data-testid="navlink-home" href="/">
             eCommerce
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
