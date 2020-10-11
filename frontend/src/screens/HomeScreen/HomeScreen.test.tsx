@@ -1,7 +1,10 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter, Router } from "react-router-dom";
+import { render, screen, waitForElement } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import axios from "axios";
+
 import HomeScreen from "./HomeScreen";
+import { act } from "react-dom/test-utils";
 
 const dummyProduct = [
   {
@@ -31,20 +34,21 @@ const dummyProduct = [
     numReviews: 8,
   },
 ];
+jest.mock("axios");
+
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
 describe("Render <HomeScreen />", () => {
   beforeEach(() => {
+    mockedAxios.get.mockResolvedValue({ data: { result: dummyProduct } });
     render(
       <MemoryRouter>
-        <HomeScreen products={dummyProduct} />
+        <HomeScreen />
       </MemoryRouter>
     );
   });
-
-  test("Render title without error", async () => {
-    expect(await screen.findByTestId("title")).toBeTruthy();
-  });
-
-  test("Render Correct number of Product on HomeScreen", async () => {
-    expect(await screen.findAllByTestId(/product-info/)).toHaveLength(2);
+  test("Render correct number of component on screen without error", () => {
+    expect(mockedAxios.get).toHaveBeenCalledTimes(1);
+    expect(screen.queryAllByTestId(/product-info/)).toHaveLength(2);
   });
 });

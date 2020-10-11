@@ -1,13 +1,23 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 
+import axios from "axios";
 import Rating from "../../components/Product/Rating/Rating";
-import products from "../../products";
+import { ProductProps } from "../../types/app_types";
 
 const ProductScreen = () => {
   const { id } = useParams<{ id: string }>();
-  const product = products.find((p) => p._id === id)!;
+  const [product, setProduct] = useState<ProductProps>();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/v1/products/${id}`);
+      setProduct(data.result);
+    };
+    fetchProduct();
+  }, [id]);
+
   return (
     <Fragment>
       <Link data-testid="back-button" className="btn btn-light my-3" to="/">
@@ -23,10 +33,12 @@ const ProductScreen = () => {
               <h2>{product?.name}</h2>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Rating
-                value={product?.rating}
-                text={`${product?.numReviews} reviews`}
-              />
+              {product && (
+                <Rating
+                  value={product?.rating}
+                  text={`${product?.numReviews} reviews`}
+                />
+              )}
             </ListGroup.Item>
             <ListGroup.Item data-testid="product-price">
               Price: {product?.price}
@@ -51,7 +63,9 @@ const ProductScreen = () => {
                 <Row>
                   <Col>Status:</Col>
                   <Col data-testid="stock-availability">
-                    {product?.countInStock > 0 ? "In Stock" : "Out Of Stock"}
+                    {product && product?.countInStock > 0
+                      ? "In Stock"
+                      : "Out Of Stock"}
                   </Col>
                 </Row>
               </ListGroup.Item>

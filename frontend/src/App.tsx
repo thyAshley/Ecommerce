@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import products from "./products";
 import ProductScreen from "./screens/ProductScreen/ProductScreen";
 import CartScreen from "./screens/CartScreen/CartScreen";
 
@@ -17,7 +16,7 @@ const App: React.FC = () => {
         <Container>
           <Switch>
             <Route path="/" exact>
-              <HomeScreen products={products} />
+              <HomeScreen />
             </Route>
             <Route path="/product/:id" component={ProductScreen} />
             <Route path="/cart" component={CartScreen} />
