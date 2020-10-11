@@ -28,12 +28,12 @@ describe("Testing Route", () => {
   test("Route to Product Page", () => {
     expect(screen.getByText(/Airpods/i));
     UserEvent.click(screen.getByText(/Airpods/i));
-    expect(screen.getByText(/products/i));
+    expect(screen.getByTestId(/back-button/i));
   });
 
   test("Route to Cart Page", () => {
-    expect(screen.getByText(/cart/i));
-    UserEvent.click(screen.getByText(/cart/i));
+    expect(screen.getByTestId(/navlink-cart/i));
+    UserEvent.click(screen.getByTestId(/navlink-cart/i));
     expect(screen.getByText(/cart page/i));
   });
 });
