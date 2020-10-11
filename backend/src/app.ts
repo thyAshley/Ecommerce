@@ -1,5 +1,8 @@
 import express from "express";
 import * as dotenv from "dotenv";
+
+import connectDB from "./db";
+
 dotenv.config();
 
 import routes from "./routes";
@@ -12,4 +15,5 @@ app.use(express.json());
 
 app.listen(PORT, () => {
   console.log(`server started in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  connectDB();
 });
