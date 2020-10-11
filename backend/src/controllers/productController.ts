@@ -1,18 +1,41 @@
 import { RequestHandler } from "express";
-import products from "../data/products";
+import { nextTick } from "process";
 
-export const getProduct: RequestHandler = (req, res) => {
-  res.status(200).json({
-    status: "success",
-    result: products,
-  });
+import Product from "../models/productModel";
+
+// @desc Fetch all Products
+// @route /api/v1/products
+// @access Public
+export const getProduct: RequestHandler = async (req, res, next) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json({
+      status: "Success",
+      result: products,
+    });
+  } catch (error) {
+    res.status(404);
+    next(new Error("Error fetching products"));
+  }
 };
 
-export const getProductById: RequestHandler<{ id: string }> = (req, res) => {
+// @desc Fetch Products by id
+// @route /api/v1/products/:id
+// @access Public
+export const getProductById: RequestHandler<{ id: string }> = async (
+  req,
+  res,
+  next
+) => {
   const { id } = req.params;
-  const product = products.find((product) => product._id === id);
-  res.status(200).json({
-    status: "success",
-    result: product,
-  });
+  try {
+    const product = await Product.findById(id);
+    res.status(200).json({
+      status: "Success",
+      result: product,
+    });
+  } catch (error) {
+    res.status(404);
+    next(new Error("Product cannot be found"));
+  }
 };
