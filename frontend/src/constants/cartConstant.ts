@@ -7,7 +7,7 @@ interface Cart_Add {
 }
 interface Cart_Remove {
   type: typeof CART_REMOVE_ITEM;
-  payload: IcartItem;
+  payload: string;
 }
 export type ICart = Cart_Add | Cart_Remove;
 
