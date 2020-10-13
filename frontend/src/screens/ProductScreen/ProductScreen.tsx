@@ -27,7 +27,7 @@ interface productState {
 
 const ProductScreen = () => {
   const { id } = useParams<{ id: string }>();
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   let history = useHistory();
 
   const dispatch = useDispatch();
