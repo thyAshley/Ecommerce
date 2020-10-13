@@ -17,3 +17,21 @@ export const listProducts = () => async (dispatch: Dispatch) => {
     });
   }
 };
+
+export const listProductsDetail = (id: string) => async (
+  dispatch: Dispatch
+) => {
+  try {
+    dispatch({ type: actions.PRODUCT_DETAILS_REQUEST });
+    const { data } = await axios.get(`/api/v1/products/${id}`);
+    dispatch({ type: actions.PRODUCT_DETAILS_SUCCESS, payload: data.result });
+  } catch (error) {
+    dispatch({
+      type: actions.PRODUCT_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

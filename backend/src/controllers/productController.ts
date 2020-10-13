@@ -1,5 +1,4 @@
 import { RequestHandler } from "express";
-import { nextTick } from "process";
 
 import Product from "../models/productModel";
 
@@ -9,6 +8,7 @@ import Product from "../models/productModel";
 export const getProduct: RequestHandler = async (req, res, next) => {
   try {
     const products = await Product.find();
+
     res.status(200).json({
       status: "Success",
       result: products,

@@ -3,10 +3,12 @@ import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import { listProducts } from "../../actions/productActions";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import Message from "../../components/Message/Message";
 import Product from "../../components/Product/Product";
 import { ProductProps } from "../../types/app_types";
 
-interface rootState {
+interface productState {
   productList: {
     error: string;
     products: ProductProps[];
@@ -16,8 +18,9 @@ interface rootState {
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const productList = useSelector((state: rootState) => state.productList);
+  const productList = useSelector((state: productState) => state.productList);
   const { loading, error, products } = productList;
+
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
@@ -27,9 +30,9 @@ const HomeScreen = () => {
       <h1 data-testid="title">Latest Products</h1>
       {products &&
         (loading ? (
-          <h2>Loading</h2>
+          <LoadingSpinner />
         ) : error ? (
-          <h2>{error}</h2>
+          <Message variant="danger">Cannot connect to the server</Message>
         ) : (
           <Row>
             {products.map((product) => (
