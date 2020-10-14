@@ -1,4 +1,4 @@
-import express, { Response, NextFunction, Request } from "express";
+import { Response, NextFunction, Request } from "express";
 
 const notFound = (req: Request, res: Response, next: NextFunction) => {
   res.status(404);
