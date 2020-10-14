@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import * as actions from "../constants/cartConstant";
-import { RootState } from "../store";
+import { RootState } from "../store/store";
 
 export const addToCart = (id: string, qty: number) => async (
   dispatch: Dispatch,

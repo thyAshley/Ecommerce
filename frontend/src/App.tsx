@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import ProductScreen from "./screens/ProductScreen/ProductScreen";
 import CartScreen from "./screens/CartScreen/CartScreen";
+import LoginScreen from "./screens/LoginScreen/LoginScreen";
 
 const App: React.FC = () => {
   return (
@@ -15,11 +16,12 @@ const App: React.FC = () => {
       <main className="py-3">
         <Container>
           <Switch>
+            <Route path="/product/:id" component={ProductScreen} />
+            <Route path="/cart/:id?" component={CartScreen} />
+            <Route path="/login" component={LoginScreen} />
             <Route path="/" exact>
               <HomeScreen />
             </Route>
-            <Route path="/product/:id" component={ProductScreen} />
-            <Route path="/cart/:id?" component={CartScreen} />
           </Switch>
         </Container>
       </main>

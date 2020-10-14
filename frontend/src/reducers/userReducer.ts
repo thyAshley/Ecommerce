@@ -1,15 +1,22 @@
 import * as actions from "../constants/userConstant";
+import { Iuser } from "../store/types";
 
-export const userReducer = (state = {}, action: actions.userActions) => {
+const initialState: Iuser = {
+  userInfo: null,
+};
+export const userReducer = (
+  state = initialState,
+  action: actions.userActions
+): Iuser => {
   switch (action.type) {
     case actions.USER_LOGIN_REQUEST:
-      return { loading: true };
+      return { ...state, loading: true };
     case actions.USER_LOGIN_FAILURE:
-      return { loading: false, error: action.payload };
+      return { ...state, loading: false, error: action.payload };
     case actions.USER_LOGIN_SUCCESS:
-      return { loading: true, userInfo: action.payload };
+      return { ...state, loading: true, userInfo: action.payload };
     case actions.USER_LOGOUT:
-      return {};
+      return { ...state };
     default:
       return state;
   }

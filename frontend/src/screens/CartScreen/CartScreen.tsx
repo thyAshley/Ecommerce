@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 
 import Message from "../../components/Message/Message";
-import { RootState } from "../../store";
+import { RootState } from "../../store/store";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 
 const CartScreen = () => {
