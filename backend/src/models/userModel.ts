@@ -1,4 +1,4 @@
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 export interface IUser extends mongoose.Document {
@@ -9,7 +9,7 @@ export interface IUser extends mongoose.Document {
   comparePassword(password: string): Promise<boolean>;
 }
 
-const userSchema: Schema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
