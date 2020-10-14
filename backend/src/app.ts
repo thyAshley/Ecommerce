@@ -1,6 +1,13 @@
 import express from "express";
 import * as dotenv from "dotenv";
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
 import connectDB from "./db";
 import { notFound, errorHandler } from "./middleware/errorMiddleware";
 

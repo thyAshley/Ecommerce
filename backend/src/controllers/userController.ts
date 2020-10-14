@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import e, { RequestHandler } from "express";
 
 import generateToken from "../utils/generateToken";
 import User from "../models/userModel";
@@ -43,8 +43,49 @@ export interface IGetUserAuthInfo extends Request {
 // @route   GET /api/v1/users/profile
 // @access  Private
 export const userProfile: RequestHandler = async (req, res, next) => {
-  // const user = await User.findById({1});
-  res.status(200).json({
-    status: "success",
-  });
+  const user = await User.findById(req.user._id);
+  if (user) {
+    return res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  }
+  res.status(404);
+  next(new Error("User not found"));
+};
+
+// @desc    Register a new user
+// @route   GET /api/v1/users
+// @access  public
+export const registerUser: RequestHandler = async (req, res, next) => {
+  const { name, email, password } = req.body;
+  try {
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+      res.status(400);
+      next(new Error("User already exists"));
+    }
+
+    const user = await User.create({
+      name,
+      email,
+      password,
+    });
+
+    return res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id),
+    });
+  } catch (error) {
+    res.status(400);
+    if (error.name === "ValidationError") {
+      next(new Error("Invalid Inputs"));
+    }
+    next(new Error(error));
+  }
 };
