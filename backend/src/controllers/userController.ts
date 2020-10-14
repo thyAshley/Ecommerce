@@ -14,7 +14,7 @@ export const authUser: RequestHandler = async (req, res, next) => {
       const result = await user.comparePassword(password);
       if (result) {
         const token = generateToken(user._id);
-        return res.status(200).json({
+        return res.status(201).json({
           status: "success",
           result: {
             _id: user._id,
