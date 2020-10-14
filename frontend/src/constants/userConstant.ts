@@ -1,3 +1,5 @@
+import { Iuserinfo } from "../store/types";
+
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_LOGIN_FAILURE = "USER_LOGIN_FAILURE";
@@ -8,7 +10,7 @@ interface userLoginRequest {
 }
 interface userLoginSuccess {
   type: typeof USER_LOGIN_SUCCESS;
-  payload: string;
+  payload: Iuserinfo;
 }
 interface userLoginFailure {
   type: typeof USER_LOGIN_FAILURE;

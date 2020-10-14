@@ -18,7 +18,7 @@ export const productReducer = (
     case actions.PRODUCT_LIST_FAIL:
       return { ...state, loading: false, error: action.payload };
     default:
-      return { state };
+      return state;
   }
 };
 

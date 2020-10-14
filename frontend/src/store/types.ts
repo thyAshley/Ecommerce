@@ -7,8 +7,16 @@ export interface IcartItem {
   qty: number;
 }
 
+export type Iuserinfo = {
+  name: string;
+  _id: string;
+  email: string;
+  isAdmin: boolean;
+  token: string;
+} | null;
+
 export interface Iuser {
-  userInfo: string | null;
+  userInfo: Iuserinfo;
   loading?: boolean;
   error?: string;
 }

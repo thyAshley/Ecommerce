@@ -24,7 +24,6 @@ const userDetailFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo")!)
   : null;
 
-console.log(userDetailFromStorage);
 const initialState = {
   cart: {
     cartItem: cartItemsFromStorage,
