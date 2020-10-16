@@ -34,3 +34,35 @@ export const logout = () => (dispatch: Dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: actions.USER_LOGOUT });
 };
+
+export const register = (
+  name: string,
+  email: string,
+  password: string
+) => async (dispatch: Dispatch) => {
+  dispatch({ type: actions.USER_LOGIN_REQUEST });
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post(
+      "/api/v1/users",
+      { name, email, password },
+      config
+    );
+
+    dispatch({ type: actions.USER_REGISTER_SUCCESS, payload: data });
+    localStorage.setItem("userInfo", JSON.stringify(data));
+    dispatch({ type: actions.USER_LOGIN_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actions.USER_REGISTER_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

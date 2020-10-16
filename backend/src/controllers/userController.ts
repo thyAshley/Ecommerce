@@ -56,6 +56,35 @@ export const userProfile: RequestHandler = async (req, res, next) => {
   next(new Error("User not found"));
 };
 
+// @desc    Update user profile
+// @route   PUT /api/v1/users/profile
+// @access  Private
+export const updateUserProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+      const updatedUser = await user.save();
+      return res.status(200).json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+      });
+    } else {
+      res.status(404);
+      next(new Error("User not found, please re-login"));
+    }
+  } catch (error) {
+    console.log(error);
+    next(new Error("Unexpected Error occur"));
+  }
+};
+
 // @desc    Register a new user
 // @route   GET /api/v1/users
 // @access  public

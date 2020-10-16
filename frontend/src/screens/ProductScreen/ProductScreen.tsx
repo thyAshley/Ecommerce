@@ -37,7 +37,7 @@ const ProductScreen = () => {
 
   useEffect(() => {
     dispatch(listProductsDetail(id));
-  }, [id]);
+  }, [id, dispatch]);
 
   const submitHandler = () => {
     history.push(`/cart/${id}?qty=${qty}`);
