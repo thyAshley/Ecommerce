@@ -105,7 +105,44 @@ export const getUserDetails = (id: string) => async (
   }
 };
 
-export const userUpdateProfile = (user: Iuser) => async (
-  dispatch: Dispatch,
-  state: () => RootState
-) => {};
+export const userUpdateProfile = (
+  name?: string,
+  email?: string,
+  password?: string
+) => async (dispatch: Dispatch, state: () => RootState) => {
+  dispatch({ type: actions.USER_UPDATE_REQUEST });
+  const { userInfo } = state().user;
+  if (userInfo) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    try {
+      const { data } = await axios.put(
+        "/api/v1/users/profile",
+        {
+          name,
+          email,
+          password,
+        },
+        config
+      );
+      dispatch({ type: actions.USER_UPDATE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: actions.USER_UPDATE_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  } else {
+    dispatch({
+      type: actions.USER_DETAILS_FAILURE,
+      payload: "You must be login",
+    });
+  }
+};
