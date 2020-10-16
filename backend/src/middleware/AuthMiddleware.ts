@@ -9,6 +9,7 @@ export const protect: RequestHandler = async (req, res, next) => {
   if (token) {
     try {
       const payload = <any>jwt.verify(token, process.env.JWT_SECRET!);
+
       if (payload) {
         req.user = await User.findById(payload.id).select("-password");
       }

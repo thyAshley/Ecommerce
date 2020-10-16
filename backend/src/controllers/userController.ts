@@ -35,25 +35,24 @@ export const authUser: RequestHandler = async (req, res, next) => {
   }
 };
 
-export interface IGetUserAuthInfo extends Request {
-  user: any;
-}
-
 // @desc    Get user profile
 // @route   GET /api/v1/users/profile
 // @access  Private
 export const userProfile: RequestHandler = async (req, res, next) => {
-  const user = await User.findById(req.user._id);
-  if (user) {
-    return res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    });
+  try {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      return res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      });
+    }
+  } catch (error) {
+    res.status(404);
+    next(new Error("User not found"));
   }
-  res.status(404);
-  next(new Error("User not found"));
 };
 
 // @desc    Update user profile
