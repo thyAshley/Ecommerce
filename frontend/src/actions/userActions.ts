@@ -3,7 +3,6 @@ import axios from "axios";
 
 import { RootState } from "../store/store";
 import * as actions from "../constants/userConstant";
-import { Iuser } from "../store/types";
 
 export const login = (email: string, password: string) => async (
   dispatch: Dispatch

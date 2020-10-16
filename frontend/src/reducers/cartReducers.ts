@@ -2,6 +2,7 @@ import * as actions from "../constants/cartConstant";
 
 const initialState = {
   cartItem: [] as actions.IcartItem[],
+  shippingAddress: {} as actions.shippingDetails,
 };
 
 export const cartReducer = (state = initialState, action: actions.ICart) => {
@@ -29,6 +30,9 @@ export const cartReducer = (state = initialState, action: actions.ICart) => {
           (item) => item.product !== action.payload
         ),
       };
+    case actions.CART_SAVE_ADDRESS:
+      return { ...state, shippingAddress: action.payload };
+
     default:
       return state;
   }

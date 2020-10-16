@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
+import * as actions from "../constants/cartConstant";
 import {
   productReducer,
   productDetailsReducer,
@@ -25,9 +26,14 @@ const userDetailFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo")!)
   : null;
 
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+  ? JSON.parse(localStorage.getItem("shippingAddress")!)
+  : null;
+
 const initialState = {
   cart: {
     cartItem: cartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
   },
   user: {
     userInfo: userDetailFromStorage,

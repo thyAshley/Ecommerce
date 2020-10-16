@@ -10,6 +10,7 @@ import CartScreen from "./screens/CartScreen/CartScreen";
 import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
+import ShippingScreen from "./screens/ShippingScreen/ShippingScreen";
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             <Route path="/profile" component={ProfileScreen} />
             <Route path="/login" component={LoginScreen} />
             <Route path="/register" component={RegisterScreen} />
+            <Route path="/shipping" component={ShippingScreen} />
             <Route path="/" exact>
               <HomeScreen />
             </Route>
