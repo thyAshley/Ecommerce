@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import Message from "../../components/Message/Message";
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
@@ -9,8 +9,10 @@ import { RootState } from "../../store/store";
 import { createOrder } from "../../actions/orderActions";
 
 const PlaceOrderScreen: React.FC = () => {
+  const history = useHistory();
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
+
   const itemPrice = cart.cartItem.reduce(
     (acc, item) => acc + item.price * item.qty,
     0
@@ -19,6 +21,18 @@ const PlaceOrderScreen: React.FC = () => {
   const shippingPrice = itemPrice > 1000 ? 0 : 100;
   const taxPrice = Number(0.15 * itemPrice);
   const totalPrice = shippingPrice + taxPrice + itemPrice;
+
+  const { order, success, error } = useSelector(
+    (state: RootState) => state.order
+  );
+  console.log(order);
+  useEffect(() => {
+    if (success) {
+      history.push(`/order/${order.createdOrder._id}`);
+    }
+    // eslint-disable-next-line
+  }, [success, history]);
+
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
@@ -122,6 +136,9 @@ const PlaceOrderScreen: React.FC = () => {
                   <Col>Total</Col>
                   <Col>$ {totalPrice.toFixed(2)}</Col>
                 </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button

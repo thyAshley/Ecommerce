@@ -8,7 +8,11 @@ interface orderCreateRequest {
 
 interface orderCreateSuccess {
   type: typeof ORDER_CREATE_SUCCESS;
-  payload: {};
+  payload: {
+    createdOrder: {
+      _id: string;
+    };
+  };
 }
 
 interface orderCreateFailure {
@@ -19,3 +23,14 @@ export type orderActions =
   | orderCreateRequest
   | orderCreateSuccess
   | orderCreateFailure;
+
+export interface IOrder {
+  loading: boolean;
+  order: {
+    createdOrder: {
+      _id?: string;
+    };
+  };
+  error: string;
+  success: boolean;
+}
