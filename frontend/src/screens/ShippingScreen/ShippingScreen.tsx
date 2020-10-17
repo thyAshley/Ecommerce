@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import FormContainer from "../../components/FormContainer/FormContainer";
+import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 import { RootState } from "../../store/store";
 import { saveShippingAddress } from "../../actions/cartActions";
 import { useHistory } from "react-router-dom";
@@ -25,6 +26,7 @@ const ShippingScreen: React.FC = () => {
 
   return (
     <FormContainer>
+      <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="address">
