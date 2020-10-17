@@ -1,25 +1,36 @@
 import React, { Fragment } from "react";
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Message from "../../components/Message/Message";
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
 import { RootState } from "../../store/store";
+import { createOrder } from "../../actions/orderActions";
 
 const PlaceOrderScreen: React.FC = () => {
   const cart = useSelector((state: RootState) => state.cart);
-
-  const totalPrice = cart.cartItem.reduce(
+  const dispatch = useDispatch();
+  const itemPrice = cart.cartItem.reduce(
     (acc, item) => acc + item.price * item.qty,
     0
   );
 
-  const shippingPrice = totalPrice > 1000 ? 0 : 100;
-  const taxPrice = Number(0.15 * totalPrice);
-
+  const shippingPrice = itemPrice > 1000 ? 0 : 100;
+  const taxPrice = Number(0.15 * itemPrice);
+  const totalPrice = shippingPrice + taxPrice + itemPrice;
   const placeOrderHandler = () => {
-    console.log("order");
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItem,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      })
+    );
   };
 
   return (
@@ -88,7 +99,7 @@ const PlaceOrderScreen: React.FC = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>$ {totalPrice}</Col>
+                  <Col>$ {itemPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
@@ -109,9 +120,7 @@ const PlaceOrderScreen: React.FC = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>
-                    $ {(shippingPrice + taxPrice + totalPrice).toFixed(2)}
-                  </Col>
+                  <Col>$ {totalPrice.toFixed(2)}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
