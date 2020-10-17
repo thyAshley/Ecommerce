@@ -1,5 +1,23 @@
 import mongoose from "mongoose";
 
+interface Iorder {
+  user: string;
+  orderItems: {
+    name: string;
+    qty: number;
+    image: string;
+    price: number;
+    product: string;
+  };
+  shippingAddress: {
+    address: string;
+    city: string;
+    postalCode: string;
+    country: string;
+  };
+  paymentMethod: string;
+}
+
 const orderSchema = new mongoose.Schema(
   {
     user: {

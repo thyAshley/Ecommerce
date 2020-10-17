@@ -1,8 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
-import { IcartItem } from "../../store/types";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import Message from "../../components/Message/Message";
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps";
