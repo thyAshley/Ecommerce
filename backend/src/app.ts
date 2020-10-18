@@ -8,6 +8,7 @@ declare global {
     }
   }
 }
+
 import connectDB from "./db";
 import { notFound, errorHandler } from "./middleware/errorMiddleware";
 

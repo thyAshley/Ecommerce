@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface Iorder {
+export interface Iorder extends mongoose.Document {
   user: string;
   orderItems: {
     name: string;
@@ -16,6 +16,14 @@ interface Iorder {
     country: string;
   };
   paymentMethod: string;
+  isPaid: boolean;
+  paidAt: number;
+  paymentResult: {
+    id: { type: String };
+    status: { type: String };
+    update_time: { type: String };
+    email_address: { type: String };
+  };
 }
 
 const orderSchema = new mongoose.Schema(
@@ -91,4 +99,4 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Order", orderSchema);
+export default mongoose.model<Iorder>("Order", orderSchema);
