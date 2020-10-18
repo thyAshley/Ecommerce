@@ -148,7 +148,10 @@ const OrderScreen: React.FC = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>$ {order?.itemPrice}</Col>
+                  <Col>
+                    ${" "}
+                    {order?.totalPrice - order?.taxPrice - order?.shippingPrice}
+                  </Col>
                 </Row>
               </ListGroup.Item>
 
