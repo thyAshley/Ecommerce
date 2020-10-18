@@ -69,7 +69,31 @@ export const getOrderDetails = (id: string) => async (
   }
 };
 
-export const orderPayment = (id: string) => async (
+export const orderPayment = (id: string, paymentResult: {}) => async (
   dispatch: Dispatch,
   state: () => RootState
-) => {};
+) => {
+  dispatch({ type: actions.ORDER_PAY_REQUEST });
+
+  const { userInfo } = state().user;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userInfo?.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.put(
+      `/api/v1/orders/${id}/pay`,
+      paymentResult,
+      config
+    );
+    dispatch({ type: actions.ORDER_PAY_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actions.ORDER_PAY_FAILURE,
+      payload: "Unexpected error occur",
+    });
+  }
+};

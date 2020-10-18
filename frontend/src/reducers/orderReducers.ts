@@ -63,7 +63,10 @@ export const getOrderReducer = (
   }
 };
 
-export const orderPayReducer = (state = {}, action: actions.orderActions) => {
+export const orderPayReducer = (
+  state = {},
+  action: actions.orderActions
+): { loading?: boolean; success?: boolean; error?: string } => {
   switch (action.type) {
     case actions.ORDER_PAY_REQUEST:
       return {
