@@ -68,3 +68,8 @@ export const getOrderDetails = (id: string) => async (
     });
   }
 };
+
+export const orderPayment = (id: string) => async (
+  dispatch: Dispatch,
+  state: () => RootState
+) => {};

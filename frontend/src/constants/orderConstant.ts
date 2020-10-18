@@ -6,6 +6,28 @@ export const ORDER_DETAILS_REQUEST = "ORDER_DETAILS_REQUEST";
 export const ORDER_DETAILS_SUCCESS = "ORDER_DETAILS_SUCCESS";
 export const ORDER_DETAILS_FAILURE = "ORDER_DETAILS_FAILURE";
 
+export const ORDER_PAY_REQUEST = "ORDER_PAY_REQUEST";
+export const ORDER_PAY_SUCCESS = "ORDER_PAY_SUCCESS";
+export const ORDER_PAY_FAILURE = "ORDER_PAY_FAILURE";
+export const ORDER_PAY_RESET = "ORDER_PAY_RESET";
+
+interface orderPayRequest {
+  type: typeof ORDER_PAY_REQUEST;
+}
+
+interface orderPaySuccess {
+  type: typeof ORDER_PAY_SUCCESS;
+}
+
+interface orderPayFailure {
+  type: typeof ORDER_PAY_FAILURE;
+  payload: string;
+}
+
+interface orderPayReset {
+  type: typeof ORDER_PAY_RESET;
+}
+
 interface orderDetailsRequest {
   type: typeof ORDER_DETAILS_REQUEST;
 }
@@ -43,7 +65,11 @@ export type orderActions =
   | orderCreateFailure
   | orderDetailsRequest
   | orderDetailsSuccess
-  | orderDetailsFailure;
+  | orderDetailsFailure
+  | orderPayRequest
+  | orderPayFailure
+  | orderPayReset
+  | orderPaySuccess;
 
 export interface IOrder {
   loading: boolean;
