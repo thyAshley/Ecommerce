@@ -1,5 +1,5 @@
 import * as actions from "../constants/userConstant";
-import { Iuser } from "../store/types";
+import { Iuser, Iuserinfo } from "../store/types";
 
 const initialState: Iuser = {
   userInfo: null,
@@ -62,6 +62,29 @@ export const userDetailReducer = (
       };
     case actions.USER_DETAILS_RESET:
       return { ...state, loading: false, success: false, userInfo: null };
+    default:
+      return state;
+  }
+};
+
+export const userListReducer = (
+  state = {},
+  action: actions.userActions
+): { loading?: boolean; users?: Iuserinfo[]; error?: string } => {
+  switch (action.type) {
+    case actions.USER_LIST_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case actions.USER_LIST_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload,
+      };
+    case actions.USER_LIST_FAILURE:
+      return { loading: false, error: action.payload };
+
     default:
       return state;
   }
