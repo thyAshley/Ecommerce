@@ -42,6 +42,7 @@ const OrderScreen: React.FC = () => {
     } else if (!order?.isPaid) {
       addPaypalScript();
     }
+    // eslint-disable-next-line
   }, [id, successPay, dispatch, sdkReady, getOrderDetails]);
 
   const successPaymentHandler = (paymentResult: any) => {
