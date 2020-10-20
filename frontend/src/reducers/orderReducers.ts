@@ -118,6 +118,8 @@ export const userOrderReducer = (
         success: false,
         error: action.payload,
       };
+    case actions.ORDER_RESET:
+      return {};
     default:
       return state;
   }

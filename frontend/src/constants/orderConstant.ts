@@ -15,6 +15,12 @@ export const ORDER_MYREQUEST_REQUEST = "ORDER_MYREQUEST_REQUEST";
 export const ORDER_MYREQUEST_SUCCESS = "ORDER_MYREQUEST_SUCCESS";
 export const ORDER_MYREQUEST_FAILURE = "ORDER_MYREQUEST_FAILURE";
 
+export const ORDER_RESET = "ORDER_RESET";
+
+interface orderReset {
+  type: typeof ORDER_RESET;
+}
+
 interface orderPayRequest {
   type: typeof ORDER_PAY_REQUEST;
 }
@@ -89,7 +95,8 @@ export type orderActions =
   | orderPaySuccess
   | orderUserRequest
   | orderUserSuccess
-  | orderUserFailure;
+  | orderUserFailure
+  | orderReset;
 
 export interface IOrder {
   loading: boolean;

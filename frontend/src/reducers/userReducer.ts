@@ -60,6 +60,8 @@ export const userDetailReducer = (
         success: true,
         userInfo: action.payload,
       };
+    case actions.USER_DETAILS_RESET:
+      return { ...state, loading: false, success: false, userInfo: null };
     default:
       return state;
   }

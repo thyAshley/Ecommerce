@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { RootState } from "../store/store";
 import * as actions from "../constants/userConstant";
+import * as orderActions from "../constants/orderConstant";
 
 export const login = (email: string, password: string) => async (
   dispatch: Dispatch
@@ -35,6 +36,8 @@ export const login = (email: string, password: string) => async (
 export const logout = () => (dispatch: Dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: actions.USER_LOGOUT });
+  dispatch({ type: actions.USER_DETAILS_RESET });
+  dispatch({ type: orderActions.ORDER_RESET });
 };
 
 export const register = (
