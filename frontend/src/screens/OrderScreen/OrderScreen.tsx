@@ -36,13 +36,13 @@ const OrderScreen: React.FC = () => {
       setSdkReady(true);
       document.body.appendChild(script);
     };
+    dispatch(getOrderDetails(id));
     if (!order || successPay) {
       dispatch({ type: ORDER_PAY_RESET });
-      dispatch(getOrderDetails(id));
     } else if (!order?.isPaid) {
       addPaypalScript();
     }
-  }, [dispatch, successPay, order, id]);
+  }, [id, successPay, dispatch, sdkReady, getOrderDetails]);
 
   const successPaymentHandler = (paymentResult: any) => {
     dispatch(orderPayment(id, paymentResult));
@@ -151,7 +151,9 @@ const OrderScreen: React.FC = () => {
                       order?.totalPrice -
                       order?.taxPrice -
                       order?.shippingPrice
-                    ).toString()}
+                    )
+                      .toFixed(2)
+                      .toString()}
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -159,7 +161,7 @@ const OrderScreen: React.FC = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>$ {order?.shippingPrice}</Col>
+                  <Col>$ {order?.shippingPrice.toFixed(2)}</Col>
                 </Row>
               </ListGroup.Item>
 
