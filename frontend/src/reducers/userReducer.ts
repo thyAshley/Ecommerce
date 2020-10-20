@@ -84,7 +84,8 @@ export const userListReducer = (
       };
     case actions.USER_LIST_FAILURE:
       return { loading: false, error: action.payload };
-
+    case actions.USER_LIST_RESET:
+      return {};
     default:
       return state;
   }

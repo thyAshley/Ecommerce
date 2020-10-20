@@ -2,6 +2,7 @@ import React, { useEffect, Fragment } from "react";
 import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
+import { useHistory } from "react-router-dom";
 
 import { getUserList } from "../../actions/userActions";
 import Message from "../../components/Message/Message";
@@ -10,13 +11,20 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { loading, error, users } = useSelector(
     (state: RootState) => state.userList
   );
+  const { userInfo } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    dispatch(getUserList());
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(getUserList());
+    } else {
+      history.push("/login");
+    }
   }, [dispatch]);
+
   const deleteHandler = (id: string) => {
     console.log("ok");
   };

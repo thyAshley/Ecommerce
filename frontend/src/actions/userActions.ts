@@ -38,6 +38,7 @@ export const logout = () => (dispatch: Dispatch) => {
   dispatch({ type: actions.USER_LOGOUT });
   dispatch({ type: actions.USER_DETAILS_RESET });
   dispatch({ type: orderActions.ORDER_RESET });
+  dispatch({ type: actions.USER_LIST_RESET });
 };
 
 export const register = (

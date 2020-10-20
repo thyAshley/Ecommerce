@@ -22,7 +22,11 @@ export const USER_LIST_SUCCESS = "USER_LIST_SUCCESS";
 export const USER_LIST_FAILURE = "USER_LIST_FAILURE";
 
 export const USER_LOGOUT = "USER_LOGOUT";
+export const USER_LIST_RESET = "USER_LIST_RESET ";
 
+interface userListReset {
+  type: typeof USER_LIST_RESET;
+}
 interface userDetailReset {
   type: typeof USER_DETAILS_RESET;
 }
@@ -107,4 +111,5 @@ export type userActions =
   | userDetailReset
   | userListRequest
   | userListFailure
-  | userListSuccess;
+  | userListSuccess
+  | userListReset;
