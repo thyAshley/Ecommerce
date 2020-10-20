@@ -181,3 +181,35 @@ export const getUserList = () => async (
     });
   }
 };
+
+export const deleteUserList = (id: string) => async (
+  dispatch: Dispatch,
+  state: () => RootState
+) => {
+  dispatch({ type: actions.USER_DELETE_REQUEST });
+  const { userInfo } = state().user;
+  if (userInfo) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    try {
+      await axios.delete(`/api/v1/users/${id}`, config);
+      dispatch({ type: actions.USER_DELETE_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: actions.USER_DELETE_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  } else {
+    dispatch({
+      type: actions.USER_DETAILS_FAILURE,
+      payload: "Not authorized to perform this action",
+    });
+  }
+};

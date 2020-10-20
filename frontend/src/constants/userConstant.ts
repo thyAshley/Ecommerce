@@ -21,12 +21,17 @@ export const USER_LIST_REQUEST = "USER_LIST_REQUEST";
 export const USER_LIST_SUCCESS = "USER_LIST_SUCCESS";
 export const USER_LIST_FAILURE = "USER_LIST_FAILURE";
 
+export const USER_DELETE_REQUEST = "USER_DELETE_REQUEST";
+export const USER_DELETE_SUCCESS = "USER_DELETE_SUCCESS";
+export const USER_DELETE_FAILURE = "USER_DELETE_FAILURE";
+
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USER_LIST_RESET = "USER_LIST_RESET ";
 
 interface userListReset {
   type: typeof USER_LIST_RESET;
 }
+
 interface userDetailReset {
   type: typeof USER_DETAILS_RESET;
 }
@@ -51,6 +56,17 @@ interface userListSuccess {
 }
 interface userListFailure {
   type: typeof USER_LIST_FAILURE;
+  payload: string;
+}
+
+interface userDeleteRequest {
+  type: typeof USER_DELETE_REQUEST;
+}
+interface userDeleteSuccess {
+  type: typeof USER_DELETE_SUCCESS;
+}
+interface userDeleteFailure {
+  type: typeof USER_DELETE_FAILURE;
   payload: string;
 }
 
@@ -112,4 +128,7 @@ export type userActions =
   | userListRequest
   | userListFailure
   | userListSuccess
-  | userListReset;
+  | userListReset
+  | userDeleteFailure
+  | userDeleteRequest
+  | userDeleteSuccess;

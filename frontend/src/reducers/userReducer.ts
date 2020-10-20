@@ -90,3 +90,19 @@ export const userListReducer = (
       return state;
   }
 };
+
+export const userDeleteReducer = (
+  state = {},
+  action: actions.userActions
+): { success?: boolean; loading?: boolean; error?: string } => {
+  switch (action.type) {
+    case actions.USER_DELETE_REQUEST:
+      return { loading: true };
+    case actions.USER_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case actions.USER_DETAILS_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

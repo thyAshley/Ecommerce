@@ -6,6 +6,9 @@ import {
   registerUser,
   updateUserProfile,
   getUsers,
+  deleteUser,
+  getUserById,
+  updateUserById,
 } from "../controllers/userController";
 import { protect, adminProtect } from "../middleware/AuthMiddleware";
 
@@ -19,6 +22,11 @@ router
 router.post("/", registerUser);
 
 //admin routes
+router
+  .route("/:id")
+  .delete(protect, adminProtect, deleteUser)
+  .get(protect, adminProtect, getUserById)
+  .put(protect, adminProtect, updateUserById);
 router.get("/", protect, adminProtect, getUsers);
 
 export default router;
