@@ -83,3 +83,17 @@ export const updateOrderToPaid: RequestHandler = async (req, res, next) => {
     next(new Error("Order not found!"));
   }
 };
+
+// @desc Update order by user
+// @route Put /api/v1/products/myorders
+// @access Private
+export const findOrderByUser: RequestHandler = async (req, res, next) => {
+  try {
+    const uid = req.user.id;
+    const orders = await Order.find({ user: uid });
+    res.status(200).json(orders);
+  } catch (err) {
+    res.status(404);
+    next(new Error("An unexpected error occur"));
+  }
+};

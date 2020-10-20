@@ -71,6 +71,7 @@ export const orderPayReducer = (
     case actions.ORDER_PAY_REQUEST:
       return {
         loading: true,
+        success: false,
       };
     case actions.ORDER_PAY_SUCCESS:
       return {
@@ -80,10 +81,47 @@ export const orderPayReducer = (
     case actions.ORDER_PAY_FAILURE:
       return {
         loading: false,
+        success: false,
         error: action.payload,
       };
     case actions.ORDER_PAY_RESET:
-      return {};
+      return {
+        ...state,
+        loading: false,
+        success: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export const userOrderReducer = (
+  state = {},
+  action: actions.orderActions
+): {
+  loading?: boolean;
+  success?: boolean;
+  error?: string;
+  orders?: actions.Iorder[];
+} => {
+  switch (action.type) {
+    case actions.ORDER_MYREQUEST_REQUEST:
+      return {
+        loading: true,
+        success: false,
+      };
+    case actions.ORDER_MYREQUEST_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        orders: action.payload,
+      };
+    case actions.ORDER_MYREQUEST_FAILURE:
+      return {
+        loading: false,
+        success: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

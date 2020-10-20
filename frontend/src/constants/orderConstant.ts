@@ -11,6 +11,10 @@ export const ORDER_PAY_SUCCESS = "ORDER_PAY_SUCCESS";
 export const ORDER_PAY_FAILURE = "ORDER_PAY_FAILURE";
 export const ORDER_PAY_RESET = "ORDER_PAY_RESET";
 
+export const ORDER_MYREQUEST_REQUEST = "ORDER_MYREQUEST_REQUEST";
+export const ORDER_MYREQUEST_SUCCESS = "ORDER_MYREQUEST_SUCCESS";
+export const ORDER_MYREQUEST_FAILURE = "ORDER_MYREQUEST_FAILURE";
+
 interface orderPayRequest {
   type: typeof ORDER_PAY_REQUEST;
 }
@@ -21,6 +25,19 @@ interface orderPaySuccess {
 
 interface orderPayFailure {
   type: typeof ORDER_PAY_FAILURE;
+  payload: string;
+}
+interface orderUserRequest {
+  type: typeof ORDER_MYREQUEST_REQUEST;
+}
+
+interface orderUserSuccess {
+  type: typeof ORDER_MYREQUEST_SUCCESS;
+  payload: Iorder[];
+}
+
+interface orderUserFailure {
+  type: typeof ORDER_MYREQUEST_FAILURE;
   payload: string;
 }
 
@@ -69,7 +86,10 @@ export type orderActions =
   | orderPayRequest
   | orderPayFailure
   | orderPayReset
-  | orderPaySuccess;
+  | orderPaySuccess
+  | orderUserRequest
+  | orderUserSuccess
+  | orderUserFailure;
 
 export interface IOrder {
   loading: boolean;
@@ -86,9 +106,17 @@ interface order {
   id: string;
 }
 export interface Iorder {
-  order: any;
-  shippingAddress: {};
-  loading: boolean;
-  success: boolean;
-  error: string;
+  order?: any;
+  shippingAddress?: {};
+  loading?: boolean;
+  success?: boolean;
+  error?: string;
+  orders?: any;
+  _id?: string;
+  createdAt?: string;
+  isPaid?: boolean;
+  paidAt?: string;
+  totalPrice?: number;
+  isDelivered?: boolean;
+  deliveredAt?: string;
 }

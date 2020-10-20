@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
+import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { PayPalButton } from "react-paypal-button-v2";
 import Axios from "axios";
 
@@ -12,14 +12,13 @@ import { getOrderDetails, orderPayment } from "../../actions/orderActions";
 import { ORDER_PAY_RESET } from "../../constants/orderConstant";
 
 const OrderScreen: React.FC = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
 
   const [sdkReady, setSdkReady] = useState(false);
 
   const {
-    order: { order: order },
+    order: { order },
     loading,
     error,
   } = useSelector((state: RootState) => state.orderDetails);
@@ -27,7 +26,6 @@ const OrderScreen: React.FC = () => {
   const { loading: loadingPay, success: successPay } = useSelector(
     (state: RootState) => state.orderPayment
   );
-
   useEffect(() => {
     const addPaypalScript = async () => {
       const { data: clientId } = await Axios.get("/api/v1/config/paypal");
@@ -44,7 +42,7 @@ const OrderScreen: React.FC = () => {
     } else if (!order?.isPaid) {
       addPaypalScript();
     }
-  }, [dispatch, getOrderDetails, successPay, order]);
+  }, [dispatch, successPay, order, id]);
 
   const successPaymentHandler = (paymentResult: any) => {
     dispatch(orderPayment(id, paymentResult));
@@ -149,8 +147,11 @@ const OrderScreen: React.FC = () => {
                 <Row>
                   <Col>Items</Col>
                   <Col>
-                    ${" "}
-                    {order?.totalPrice - order?.taxPrice - order?.shippingPrice}
+                    {(
+                      order?.totalPrice -
+                      order?.taxPrice -
+                      order?.shippingPrice
+                    ).toString()}
                   </Col>
                 </Row>
               </ListGroup.Item>
