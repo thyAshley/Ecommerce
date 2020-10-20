@@ -117,3 +117,16 @@ export const registerUser: RequestHandler = async (req, res, next) => {
     next(new Error(error));
   }
 };
+
+// @desc    Get all users
+// @route   GET /api/v1/users
+// @access  Private/Admin
+export const getUsers: RequestHandler = async (req, res, next) => {
+  try {
+    const user = await User.find({}).select("-password");
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404);
+    next(new Error("User not found"));
+  }
+};

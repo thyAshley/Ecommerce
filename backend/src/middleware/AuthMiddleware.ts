@@ -26,3 +26,12 @@ export const protect: RequestHandler = async (req, res, next) => {
 
   next();
 };
+
+export const adminProtect: RequestHandler = async (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401);
+    next(new Error("Not Authorized to handle this action"));
+  }
+};
