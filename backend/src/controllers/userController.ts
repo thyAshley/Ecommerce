@@ -158,7 +158,7 @@ export const getUserById: RequestHandler = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
     if (user) {
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } else {
       res.status(404);
       next("User not found");
@@ -176,6 +176,7 @@ export const getUserById: RequestHandler = async (req, res, next) => {
 export const updateUserById: RequestHandler = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
+
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;

@@ -106,3 +106,21 @@ export const userDeleteReducer = (
       return state;
   }
 };
+
+export const adminUpdateReducer = (
+  state = {},
+  action: actions.userActions
+): { success?: boolean; loading?: boolean; error?: string } => {
+  switch (action.type) {
+    case actions.ADMIN_UPDATE_REQUEST:
+      return { loading: true };
+    case actions.ADMIN_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case actions.ADMIN_UPDATE_FAILURE:
+      return { loading: false, error: action.payload };
+    case actions.ADMIN_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};

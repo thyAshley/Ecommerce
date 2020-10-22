@@ -17,6 +17,11 @@ export const USER_UPDATE_REQUEST = "USER_UPDATE_REQUEST";
 export const USER_UPDATE_SUCCESS = "USER_UPDATE_SUCCESS";
 export const USER_UPDATE_FAILURE = "USER_UPDATE_FAILURE";
 
+export const ADMIN_UPDATE_REQUEST = "ADMIN_UPDATE_REQUEST";
+export const ADMIN_UPDATE_SUCCESS = "ADMIN_UPDATE_SUCCESS";
+export const ADMIN_UPDATE_FAILURE = "ADMIN_UPDATE_FAILURE";
+export const ADMIN_UPDATE_RESET = "ADMIN_UPDATE_RESET";
+
 export const USER_LIST_REQUEST = "USER_LIST_REQUEST";
 export const USER_LIST_SUCCESS = "USER_LIST_SUCCESS";
 export const USER_LIST_FAILURE = "USER_LIST_FAILURE";
@@ -82,6 +87,21 @@ interface userUpdateFailure {
   payload: string;
 }
 
+interface adminUpdateRequest {
+  type: typeof ADMIN_UPDATE_REQUEST;
+}
+interface adminUpdateSuccess {
+  type: typeof ADMIN_UPDATE_SUCCESS;
+  payload: Iuserinfo;
+}
+interface adminUpdateFailure {
+  type: typeof ADMIN_UPDATE_FAILURE;
+  payload: string;
+}
+interface adminUpdateReset {
+  type: typeof ADMIN_UPDATE_RESET;
+}
+
 interface userRegisterRequest {
   type: typeof USER_REGISTER_REQUEST;
 }
@@ -131,4 +151,8 @@ export type userActions =
   | userListReset
   | userDeleteFailure
   | userDeleteRequest
-  | userDeleteSuccess;
+  | userDeleteSuccess
+  | adminUpdateRequest
+  | adminUpdateSuccess
+  | adminUpdateFailure
+  | adminUpdateReset;

@@ -4,6 +4,7 @@ import axios from "axios";
 import { RootState } from "../store/store";
 import * as actions from "../constants/userConstant";
 import * as orderActions from "../constants/orderConstant";
+import { Iuserinfo } from "../store/types";
 
 export const login = (email: string, password: string) => async (
   dispatch: Dispatch
@@ -200,6 +201,45 @@ export const deleteUserList = (id: string) => async (
     } catch (error) {
       dispatch({
         type: actions.USER_DELETE_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  } else {
+    dispatch({
+      type: actions.USER_DETAILS_FAILURE,
+      payload: "Not authorized to perform this action",
+    });
+  }
+};
+
+export const adminUpdateUser = (user: Iuserinfo) => async (
+  dispatch: Dispatch,
+  state: () => RootState
+) => {
+  dispatch({ type: actions.ADMIN_UPDATE_REQUEST });
+  const { userInfo } = state().user;
+  if (userInfo) {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    try {
+      const { data } = await axios.put(
+        `/api/v1/users/${user!._id}`,
+        user,
+        config
+      );
+      dispatch({ type: actions.ADMIN_UPDATE_SUCCESS });
+      dispatch({ type: actions.USER_DETAILS_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: actions.ADMIN_UPDATE_FAILURE,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

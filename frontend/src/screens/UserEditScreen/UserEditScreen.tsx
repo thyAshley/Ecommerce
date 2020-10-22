@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,7 +7,8 @@ import Message from "../../components/Message/Message";
 import Loader from "../../components/LoadingSpinner/LoadingSpinner";
 import FormContainer from "../../components/FormContainer/FormContainer";
 import { RootState } from "../../store/store";
-import { getUserDetails } from "../../actions/userActions";
+import { getUserDetails, adminUpdateUser } from "../../actions/userActions";
+import * as actions from "../../constants/userConstant";
 
 const UserEditScreen = () => {
   const { id: userId } = useParams<{ id: string }>();
@@ -15,13 +16,23 @@ const UserEditScreen = () => {
   const [name, setName] = useState("");
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const { loading, error, userInfo: user } = useSelector(
     (state: RootState) => state.userProfile
   );
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = useSelector((state: RootState) => state.adminUpdate);
 
   useEffect(() => {
-    console.log(user);
+    if (successUpdate) {
+      dispatch({ type: actions.ADMIN_UPDATE_RESET });
+      history.push("/admin/userlist");
+    }
+
     if (!user?.name || user._id !== userId) {
       dispatch(getUserDetails(userId));
     } else {
@@ -34,6 +45,9 @@ const UserEditScreen = () => {
 
   const submitHandler = (e: React.FormEvent): void => {
     e.preventDefault();
+    dispatch(
+      adminUpdateUser({ _id: userId, email, name, isAdmin, token: user!.token })
+    );
   };
 
   return (
@@ -43,6 +57,8 @@ const UserEditScreen = () => {
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
