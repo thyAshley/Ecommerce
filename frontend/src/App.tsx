@@ -16,6 +16,7 @@ import PlaceOrderScreen from "./screens/PlaceOrder/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen/OrderScreen";
 import UserListScreen from "./screens/UserList/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen/UserEditScreen";
+import ProductListScreen from "./screens/ProductListScreen/ProductListScreen";
 
 const App: React.FC = () => {
   return (
@@ -35,6 +36,7 @@ const App: React.FC = () => {
             <Route path="/order/:id" component={OrderScreen} />
             <Route path="/admin/userlist" component={UserListScreen} />
             <Route path="/admin/user/:id" component={UserEditScreen} />
+            <Route path="/admin/productlist" component={ProductListScreen} />
             <Route path="/" exact>
               <HomeScreen />
             </Route>

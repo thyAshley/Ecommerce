@@ -4,12 +4,17 @@ import * as actions from "../constants/productConstant";
 const productsState = {
   products: [] as ProductProps[],
   loading: false,
+  error: "",
 };
 
 export const productReducer = (
-  state = productsState,
+  state = {},
   action: actions.productAction
-) => {
+): {
+  products?: ProductProps[];
+  loading?: boolean;
+  error?: string;
+} => {
   switch (action.type) {
     case actions.PRODUCT_LIST_REQUEST:
       return { ...state, loading: true };
