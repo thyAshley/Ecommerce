@@ -8,6 +8,7 @@ import { listProducts } from "../../actions/productActions";
 import Message from "../../components/Message/Message";
 import { RootState } from "../../store/store";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import { adminDeleteProduct } from "../../actions/productActions";
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,11 @@ const ProductListScreen = () => {
     (state: RootState) => state.productList
   );
   const { userInfo } = useSelector((state: RootState) => state.user);
+  const {
+    success: successDelete,
+    loading: loadingDelete,
+    error: errorDelete,
+  } = useSelector((state: RootState) => state.productDelete);
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -23,10 +29,12 @@ const ProductListScreen = () => {
     } else {
       history.push("/login");
     }
-  }, [dispatch, listProducts, history, userInfo]);
+  }, [dispatch, listProducts, history, userInfo, successDelete]);
 
   const deleteHandler = (id: string) => {
-    console.log("del");
+    if (window.confirm("are you sure?")) {
+      dispatch(adminDeleteProduct(id));
+    }
   };
   const createProductHandler = () => {
     console.log("create");
@@ -39,12 +47,13 @@ const ProductListScreen = () => {
         </Col>
         <Col className="text-right">
           <Button className="my-3" onClick={createProductHandler}>
-            <i className="fas fa-plus" />
-            Create Product
+            <i className="fas fa-plus" /> Create Product
           </Button>
         </Col>
       </Row>
       <h1>Users</h1>
+      {loadingDelete && <LoadingSpinner />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
         <LoadingSpinner />
       ) : error ? (

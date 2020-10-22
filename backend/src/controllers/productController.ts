@@ -22,11 +22,7 @@ export const getProduct: RequestHandler = async (req, res, next) => {
 // @desc Fetch Products by id
 // @route /api/v1/products/:id
 // @access Public
-export const getProductById: RequestHandler<{ id: string }> = async (
-  req,
-  res,
-  next
-) => {
+export const getProductById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
     const product = await Product.findById(id);
@@ -34,6 +30,25 @@ export const getProductById: RequestHandler<{ id: string }> = async (
       status: "Success",
       result: product,
     });
+  } catch (error) {
+    res.status(404);
+    next(new Error("Product cannot be found"));
+  }
+};
+
+// @desc Delete Products by id
+// @route /api/v1/products/:id
+// @access Private/Admin
+export const deleteProductById: RequestHandler = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.findById(id);
+    if (product) {
+      await product.remove();
+      return res.status(204).json({
+        status: "Product removed",
+      });
+    }
   } catch (error) {
     res.status(404);
     next(new Error("Product cannot be found"));

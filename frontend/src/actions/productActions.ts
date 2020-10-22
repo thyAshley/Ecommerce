@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import * as actions from "../constants/productConstant";
+import { RootState } from "../store/store";
 
 export const listProducts = () => async (dispatch: Dispatch) => {
   try {
@@ -28,6 +29,33 @@ export const listProductsDetail = (id: string) => async (
   } catch (error) {
     dispatch({
       type: actions.PRODUCT_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const adminDeleteProduct = (id: string) => async (
+  dispatch: Dispatch,
+  getState: () => RootState
+) => {
+  console.log("here");
+  const { userInfo } = getState().user;
+
+  try {
+    dispatch({ type: actions.PRODUCT_DELETE_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo!.token}`,
+      },
+    };
+    await axios.delete(`/api/v1/products/${id}`, config);
+    dispatch({ type: actions.PRODUCT_DELETE_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: actions.PRODUCT_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

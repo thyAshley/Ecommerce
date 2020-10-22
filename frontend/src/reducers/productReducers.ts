@@ -47,3 +47,19 @@ export const productDetailsReducer = (
       return { state };
   }
 };
+
+export const productDeleteReducer = (
+  state = {},
+  action: actions.productDeleteAction
+): { loading?: boolean; error?: string; success?: boolean } => {
+  switch (action.type) {
+    case actions.PRODUCT_DELETE_REQUEST:
+      return { loading: true };
+    case actions.PRODUCT_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case actions.PRODUCT_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
