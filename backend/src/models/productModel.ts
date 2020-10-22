@@ -11,6 +11,17 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+export interface IProduct extends mongoose.Document {
+  user: string;
+  name: string;
+  brand: string;
+  image: string;
+  category: string;
+  description: string;
+  price: number;
+  countInStock: number;
+}
+
 const productSchema = new mongoose.Schema(
   {
     user: {
@@ -65,4 +76,4 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Product", productSchema);
+export default mongoose.model<IProduct>("Product", productSchema);

@@ -51,7 +51,6 @@ const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
-      <h1>Users</h1>
       {loadingDelete && <LoadingSpinner />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
