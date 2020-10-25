@@ -69,7 +69,7 @@ const ProductScreen = () => {
               <ListGroup.Item>
                 {product && (
                   <Rating
-                    value={product?.rating}
+                    value={product.rating ? product.rating : 0}
                     text={`${product?.numReviews} reviews`}
                   />
                 )}

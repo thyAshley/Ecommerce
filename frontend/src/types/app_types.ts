@@ -7,6 +7,6 @@ export interface ProductProps {
   category: string;
   price: number;
   countInStock: number;
-  rating: number;
-  numReviews: number;
+  rating?: number;
+  numReviews?: number;
 }

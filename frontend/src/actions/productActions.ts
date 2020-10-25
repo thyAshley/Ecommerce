@@ -2,6 +2,7 @@ import axios from "axios";
 import { Dispatch } from "redux";
 import * as actions from "../constants/productConstant";
 import { RootState } from "../store/store";
+import { ProductProps } from "../types/app_types";
 
 export const listProducts = () => async (dispatch: Dispatch) => {
   try {
@@ -82,6 +83,36 @@ export const adminCreateProduct = () => async (
   } catch (error) {
     dispatch({
       type: actions.PRODUCT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const adminUpdateProduct = (product: ProductProps) => async (
+  dispatch: Dispatch,
+  getState: () => RootState
+) => {
+  const { userInfo } = getState().user;
+
+  try {
+    dispatch({ type: actions.PRODUCT_UPDATE_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo!.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `/api/v1/products/${product._id}`,
+      product,
+      config
+    );
+    dispatch({ type: actions.PRODUCT_UPDATE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actions.PRODUCT_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

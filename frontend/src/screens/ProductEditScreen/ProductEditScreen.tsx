@@ -7,7 +7,10 @@ import Message from "../../components/Message/Message";
 import Loader from "../../components/LoadingSpinner/LoadingSpinner";
 import FormContainer from "../../components/FormContainer/FormContainer";
 import { RootState } from "../../store/store";
-import { listProductsDetail } from "../../actions/productActions";
+import {
+  listProductsDetail,
+  adminUpdateProduct,
+} from "../../actions/productActions";
 import * as actions from "../../constants/productConstant";
 
 const ProductEditScreen = () => {
@@ -26,8 +29,18 @@ const ProductEditScreen = () => {
   const { loading, error, product } = useSelector(
     (state: RootState) => state.productDetail
   );
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = useSelector((state: RootState) => state.productUpdate);
 
   useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: actions.PRODUCT_UPDATE_RESET });
+      dispatch(listProductsDetail(productId));
+      history.push("/admin/productlist");
+    }
     if (!product?.name || product._id !== productId) {
       dispatch(listProductsDetail(productId));
     } else {
@@ -39,12 +52,23 @@ const ProductEditScreen = () => {
       setCountInStock(product?.countInStock);
       setDescription(product?.description);
     }
-    // eslint-disable-next-line
-  }, [product, productId]);
+  }, [product, productId, dispatch, history, successUpdate]);
 
   const submitHandler = (e: React.FormEvent): void => {
     e.preventDefault();
-    console.log("update product");
+    dispatch(
+      adminUpdateProduct({
+        _id: productId,
+        name,
+        image,
+        description,
+        brand,
+        price,
+        category,
+        countInStock,
+        rating: product?.rating || 0,
+      })
+    );
   };
 
   return (
@@ -54,6 +78,8 @@ const ProductEditScreen = () => {
       </Link>
       <FormContainer>
         <h1>Edit Product</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (

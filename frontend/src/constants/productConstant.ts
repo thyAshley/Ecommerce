@@ -56,6 +56,29 @@ interface productCreateFail {
 interface productCreateReset {
   type: typeof PRODUCT_CREATE_RESET;
 }
+
+interface productUpdateRequest {
+  type: typeof PRODUCT_UPDATE_REQUEST;
+}
+interface productUpdateSuccess {
+  type: typeof PRODUCT_UPDATE_SUCCESS;
+  payload: {
+    _id: string;
+  };
+}
+interface productUpdateFail {
+  type: typeof PRODUCT_UPDATE_FAIL;
+  payload: string;
+}
+interface productUpdateReset {
+  type: typeof PRODUCT_UPDATE_RESET;
+}
+export type updateProductAction =
+  | productUpdateRequest
+  | productUpdateSuccess
+  | productUpdateFail
+  | productUpdateReset;
+
 export type createProductAction =
   | productCreateRequest
   | productCreateSuccess
@@ -93,3 +116,8 @@ export const PRODUCT_CREATE_REQUEST = "PRODUCT_CREATE_REQUEST";
 export const PRODUCT_CREATE_SUCCESS = "PRODUCT_CREATE_SUCCESS";
 export const PRODUCT_CREATE_FAIL = "PRODUCT_CREATE_FAIL";
 export const PRODUCT_CREATE_RESET = "PRODUCT_CREATE_RESET";
+
+export const PRODUCT_UPDATE_REQUEST = "PRODUCT_UPDATE_REQUEST";
+export const PRODUCT_UPDATE_SUCCESS = "PRODUCT_UPDATE_SUCCESS";
+export const PRODUCT_UPDATE_FAIL = "PRODUCT_UPDATE_FAIL";
+export const PRODUCT_UPDATE_RESET = "PRODUCT_UPDATE_RESET";
