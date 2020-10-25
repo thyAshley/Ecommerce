@@ -28,14 +28,14 @@ export const productReducer = (
 };
 
 const productState = {
-  products: {} as ProductProps,
+  product: {} as ProductProps,
   loading: false,
 };
 
 export const productDetailsReducer = (
-  state = productState,
+  state = {},
   action: actions.productDetailAction
-) => {
+): { loading?: boolean; error?: string; product?: ProductProps } => {
   switch (action.type) {
     case actions.PRODUCT_DETAILS_REQUEST:
       return { ...state, loading: true };
@@ -44,7 +44,7 @@ export const productDetailsReducer = (
     case actions.PRODUCT_DETAILS_FAIL:
       return { ...state, loading: false, error: action.payload };
     default:
-      return { state };
+      return state;
   }
 };
 
