@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { useHistory } from "react-router-dom";
 
-import { listProducts } from "../../actions/productActions";
 import Message from "../../components/Message/Message";
 import { RootState } from "../../store/store";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import { adminDeleteProduct } from "../../actions/productActions";
+import {
+  adminDeleteProduct,
+  adminCreateProduct,
+  listProducts,
+} from "../../actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../../constants/productConstant";
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -23,13 +27,31 @@ const ProductListScreen = () => {
     error: errorDelete,
   } = useSelector((state: RootState) => state.productDelete);
 
+  const {
+    success: successCreate,
+    loading: loadingCreate,
+    error: errorCreate,
+    product: createdProduct,
+  } = useSelector((state: RootState) => state.productCreate);
+
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+    if (userInfo && !userInfo.isAdmin) {
       history.push("/login");
     }
-  }, [dispatch, listProducts, history, userInfo, successDelete]);
+    if (successCreate) {
+      history.push(`/admin/product/${createdProduct?._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const deleteHandler = (id: string) => {
     if (window.confirm("are you sure?")) {
@@ -37,7 +59,7 @@ const ProductListScreen = () => {
     }
   };
   const createProductHandler = () => {
-    console.log("create");
+    dispatch(adminCreateProduct());
   };
   return (
     <Fragment>
@@ -53,6 +75,8 @@ const ProductListScreen = () => {
       </Row>
       {loadingDelete && <LoadingSpinner />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <LoadingSpinner />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <LoadingSpinner />
       ) : error ? (

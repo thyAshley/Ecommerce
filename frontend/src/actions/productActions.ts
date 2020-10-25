@@ -40,7 +40,6 @@ export const adminDeleteProduct = (id: string) => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
-  console.log("here");
   const { userInfo } = getState().user;
 
   try {
@@ -56,6 +55,33 @@ export const adminDeleteProduct = (id: string) => async (
   } catch (error) {
     dispatch({
       type: actions.PRODUCT_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const adminCreateProduct = () => async (
+  dispatch: Dispatch,
+  getState: () => RootState
+) => {
+  const { userInfo } = getState().user;
+
+  try {
+    dispatch({ type: actions.PRODUCT_CREATE_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo!.token}`,
+      },
+    };
+    const { data } = await axios.post(`/api/v1/products`, {}, config);
+    dispatch({ type: actions.PRODUCT_CREATE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: actions.PRODUCT_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

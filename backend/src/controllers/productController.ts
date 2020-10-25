@@ -64,7 +64,7 @@ export const createProduct: RequestHandler = async (req, res, next) => {
       name: "Sample",
       price: 0,
       user: req.user._id,
-      image: "",
+      image: "test",
       brand: "Sample brand",
       category: "Sample category",
       countInStock: 0,
@@ -72,8 +72,10 @@ export const createProduct: RequestHandler = async (req, res, next) => {
       description: "Sample desc",
     });
     const createdProduct = await product.save();
+
     return res.status(201).json(createdProduct);
   } catch (error) {
+    console.log(error);
     res.status(404);
     next(new Error("Issue creating product"));
   }

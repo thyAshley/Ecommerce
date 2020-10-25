@@ -1,11 +1,11 @@
 import { ProductProps } from "../types/app_types";
 import * as actions from "../constants/productConstant";
 
-const productsState = {
-  products: [] as ProductProps[],
-  loading: false,
-  error: "",
-};
+// const productsState = {
+//   products: [] as ProductProps[],
+//   loading: false,
+//   error: "",
+// };
 
 export const productReducer = (
   state = {},
@@ -59,6 +59,29 @@ export const productDeleteReducer = (
       return { loading: false, success: true };
     case actions.PRODUCT_DELETE_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productCreateReducer = (
+  state = {},
+  action: actions.createProductAction
+): {
+  loading?: boolean;
+  error?: string;
+  success?: boolean;
+  product?: { _id: string };
+} => {
+  switch (action.type) {
+    case actions.PRODUCT_CREATE_REQUEST:
+      return { loading: true };
+    case actions.PRODUCT_CREATE_SUCCESS:
+      return { loading: false, success: true, product: action.payload };
+    case actions.PRODUCT_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case actions.PRODUCT_CREATE_RESET:
+      return {};
     default:
       return state;
   }
