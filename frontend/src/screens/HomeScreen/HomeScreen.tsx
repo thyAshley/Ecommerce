@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { listProducts } from "../../actions/productActions";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
@@ -20,7 +21,8 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const productList = useSelector((state: productState) => state.productList);
   const { loading, error, products } = productList;
-
+  const params = useParams();
+  console.log(params);
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);

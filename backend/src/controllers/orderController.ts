@@ -97,3 +97,19 @@ export const findOrderByUser: RequestHandler = async (req, res, next) => {
     next(new Error("An unexpected error occur"));
   }
 };
+
+// @desc Get all order
+// @route Get /api/v1/orders
+// @access Private
+export const getOrders: RequestHandler = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const order = await Order.find({}).populate("user", "name id");
+    return res.status(200).json({
+      order,
+    });
+  } catch (error) {
+    res.status(404);
+    next(new Error("Order not found!"));
+  }
+};

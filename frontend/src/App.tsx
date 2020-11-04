@@ -39,9 +39,8 @@ const App: React.FC = () => {
             <Route path="/admin/user/:id" component={UserEditScreen} />
             <Route path="/admin/product/:id" component={ProductEditScreen} />
             <Route path="/admin/productlist" component={ProductListScreen} />
-            <Route path="/" exact>
-              <HomeScreen />
-            </Route>
+            <Route path="/search/:keyword" component={HomeScreen} />
+            <Route path="/" exact component={HomeScreen} />
           </Switch>
         </Container>
       </main>

@@ -5,6 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import { RootState } from "../../store/store";
 import { logout } from "../../actions/userActions";
+import SearchBox from "../SearchBox";
 
 const Header: React.FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.user);
@@ -21,6 +22,7 @@ const Header: React.FC = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            <SearchBox />
             <Nav className="ml-auto">
               <LinkContainer data-testid="navlink-cart" to="/cart">
                 <Nav.Link>

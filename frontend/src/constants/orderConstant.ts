@@ -15,7 +15,21 @@ export const ORDER_MYREQUEST_REQUEST = "ORDER_MYREQUEST_REQUEST";
 export const ORDER_MYREQUEST_SUCCESS = "ORDER_MYREQUEST_SUCCESS";
 export const ORDER_MYREQUEST_FAILURE = "ORDER_MYREQUEST_FAILURE";
 
+export const ORDER_LIST_REQUEST = "ORDER_LIST_REQUEST";
+export const ORDER_LIST_SUCCESS = "ORDER_LIST_SUCCESS";
+export const ORDER_LIST_FAILURE = "ORDER_LIST_FAILURE";
+
 export const ORDER_RESET = "ORDER_RESET";
+
+interface orderListReq {
+  type: typeof ORDER_LIST_REQUEST;
+}
+interface orderListSuccess {
+  type: typeof ORDER_LIST_SUCCESS;
+}
+interface orderListFail {
+  type: typeof ORDER_LIST_FAILURE;
+}
 
 interface orderReset {
   type: typeof ORDER_RESET;
@@ -96,7 +110,10 @@ export type orderActions =
   | orderUserRequest
   | orderUserSuccess
   | orderUserFailure
-  | orderReset;
+  | orderReset
+  | orderListReq
+  | orderListFail
+  | orderListSuccess;
 
 export interface IOrder {
   loading: boolean;
